@@ -1,0 +1,13 @@
+This folder needs two images before the page is complete:
+
+1. icon.png — the app icon (1024px source scaled down is fine; page renders it
+   at 34px in the nav + as the favicon). Generate via the APP ICON prompt in
+   reverse-video/aso/backgrounds/PROMPTS.txt (bold rewind glyph, vivid orange,
+   flat, no text).
+
+2. home.png — a portrait screenshot of the app's Home screen (Simulator
+   capture, same as the other site pages' img/home.png). Shown inside the
+   phone mockup in the hero.
+
+Also update the three App Store links (currently href="#") in index.html once
+the app has an App Store ID: https://apps.apple.com/app/rewindo-reverse-video/id<APP_ID>

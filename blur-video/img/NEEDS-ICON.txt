@@ -1,0 +1,13 @@
+This folder needs two assets before the page goes live (do not fabricate them):
+
+1. icon.png  — the real Blur Video app icon (same asset that ships in the app /
+   App Store). Referenced by index.html favicon + nav brand. An MJ icon prompt
+   is ready in blur-video/aso/backgrounds/PROMPTS.txt (section C) if the icon
+   hasn't been generated yet.
+
+2. home.png — a real Home-screen capture of the app (Simulator, DEBUG capture
+   harness), shown inside the hero phone mockup. Same convention as
+   site/cut-silence/img/home.png.
+
+Also fill in the three App Store links in index.html (currently href="#") once
+the app is live — Stage 7 of the release checklist.

@@ -1,0 +1,13 @@
+This folder needs two assets before the page goes live:
+
+1. icon.png — the Framely / Extract Frames app icon (1024×1024 PNG, square;
+   the page rounds the corners). Export from the Xcode asset catalog once the
+   icon is final, or use the MJ icon prompt in
+   extract-frames/aso/backgrounds/PROMPTS.txt (section C).
+
+2. home.png — a portrait screenshot of the app's Home screen for the hero
+   phone mockup (any modern iPhone size, e.g. 1320×2868 or 1179×2556).
+   A raw simulator capture works — see extract-frames/build-report/home.png
+   for a starting point (copy it here as home.png if it looks current).
+
+Referenced by ../index.html as img/icon.png and img/home.png.
