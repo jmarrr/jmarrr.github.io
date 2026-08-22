@@ -1,22 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BarCount — Bar Inventory</title>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BarCount — Bar Inventory Count &amp; Variance</title>
+<meta name="description" content="Bar inventory for one manager: walk the shelf in order, close the count, and see variance vs the last close — bottles and dollars — offline. Not a $165/mo multi-user suite.">
+<meta name="theme-color" content="#B45309">
+<meta property="og:title" content="BarCount — Bar Inventory Count &amp; Variance">
+<meta property="og:description" content="Walk the shelf, close the count, see what walked away. Offline bar inventory with variance and a below-PAR restock list.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/icon.png">
+<link rel="canonical" href="https://jmarrr.github.io/barcount/">
+<meta property="og:url" content="https://jmarrr.github.io/barcount/">
+<meta property="og:image" content="https://jmarrr.github.io/barcount/img/icon.png">
+<meta property="og:image:alt" content="BarCount app icon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BarCount — Bar Inventory Count &amp; Variance">
+<meta name="twitter:description" content="Walk the shelf, close the count, see what walked away. Offline bar inventory with variance and restock list.">
+<meta name="twitter:image" content="https://jmarrr.github.io/barcount/img/icon.png">
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-         max-width: 640px; margin: 48px auto; padding: 0 20px; color: #1c1418; background:#FBF6F1; }
-  h1 { font-size: 1.8rem; } .mut { color:#7A6E73; }
-  a { color:#B45309; } .icon { width:88px; height:88px; border-radius:20px; }
-  .store { display:inline-block; background:#000; color:#fff; padding:12px 22px; border-radius:12px; font-weight:600; text-decoration:none; }
+:root{--accent:#B45309;--dark:#78350F;--soft:#FBEFDD;--g2:#D97706;--ink:#1C1F24;--muted:#5a6570;--line:#ecdcc4;--bg:#fff;--bg-alt:#FBF6EE;--radius:18px;--shadow:0 18px 50px rgba(28,31,36,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+nav{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(14px);background:rgba(255,255,255,.82);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700}.brand img{width:34px;height:34px;border-radius:9px}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:9px 16px;border-radius:980px;font-size:.9rem;font-weight:600}
+.hero{overflow:hidden;background:radial-gradient(1100px 540px at 78% -10%,var(--soft) 0,rgba(255,255,255,0) 60%),linear-gradient(180deg,var(--soft) 0,#fff 70%)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:74px 22px 64px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--soft);color:var(--dark);font-weight:600;font-size:.82rem;padding:6px 13px;border-radius:980px;border:1px solid var(--line);margin-bottom:18px}
+h1{font-size:3.05rem;line-height:1.06;letter-spacing:-.02em;margin:.1em 0 .35em;font-weight:800}
+h1 .grad{background:linear-gradient(120deg,var(--accent),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:1.18rem;color:var(--muted);max-width:30em;margin:0 0 28px}
+.cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.appstore{display:inline-flex;align-items:center;gap:11px;background:#000;color:#fff;padding:13px 22px;border-radius:14px;font-weight:600;flex-direction:row-reverse}
+.appstore svg{width:26px;height:26px;fill:#fff}.appstore small{display:block;font-size:.66rem;opacity:.85;font-weight:500;line-height:1}.appstore b{font-size:1.16rem;font-weight:600}
+.price-pill{font-size:.92rem;color:var(--muted)}.price-pill b{color:var(--ink)}
+.phone-stage{display:flex;justify-content:center}
+.phone{width:286px;max-width:78vw;border-radius:46px;background:#0b0b0d;padding:11px;box-shadow:var(--shadow)}
+.phone img{width:100%;border-radius:36px;display:block}
+.trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-alt)}
+.trust .wrap{display:flex;flex-wrap:wrap;gap:14px 36px;justify-content:center;padding:20px 22px}
+.trust span{display:inline-flex;align-items:center;gap:9px;font-weight:600;color:#4a331a}
+.trust svg{width:19px;height:19px;fill:none;stroke:var(--accent);stroke-width:2.4}
+section{padding:78px 0}.sec-head{text-align:center;max-width:34em;margin:0 auto 50px}
+.sec-head h2{font-size:2.1rem;letter-spacing:-.02em;margin:0 0 .35em;font-weight:800}.sec-head p{color:var(--muted);font-size:1.1rem;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px}
+.ic{width:46px;height:46px;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.ic svg{width:24px;height:24px;fill:none;stroke:var(--accent);stroke-width:2}.card h3{margin:0 0 .35em;font-size:1.16rem}.card p{margin:0;color:var(--muted);font-size:.97rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;counter-reset:step}.step{padding-top:8px}
+.step::before{counter-increment:step;content:counter(step);display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:1.15rem;margin-bottom:16px}
+.step h3{margin:0 0 .3em;font-size:1.14rem}.step p{margin:0;color:var(--muted)}
+.pricing{display:flex;justify-content:center}
+.pricecard{background:#fff;border:1px solid var(--line);border-radius:24px;padding:42px 40px;max-width:430px;text-align:center;box-shadow:var(--shadow)}
+.pricecard .amt{font-size:3.2rem;font-weight:800;letter-spacing:-.02em;margin:.1em 0 0}.pricecard .amt span{font-size:1.1rem;color:var(--muted);font-weight:600}
+.once{display:inline-block;background:var(--soft);color:var(--dark);font-weight:700;padding:5px 14px;border-radius:980px;font-size:.85rem;margin-bottom:6px}
+.plist{list-style:none;padding:0;margin:22px 0 28px;text-align:left}.plist li{display:flex;gap:11px;align-items:flex-start;padding:7px 0}
+.plist svg{width:20px;height:20px;flex:none;margin-top:3px;fill:none;stroke:var(--accent);stroke-width:2.6}
+.faq{max-width:760px;margin:0 auto}details{border:1px solid var(--line);border-radius:14px;padding:4px 20px;margin-bottom:12px;background:#fff}
+summary{cursor:pointer;font-weight:600;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}summary::after{content:"+";font-size:1.5rem;color:var(--accent)}details[open] summary::after{content:"\2013"}details p{margin:0 0 18px;color:var(--muted)}
+.band{background:linear-gradient(120deg,var(--accent),var(--g2));color:#fff;text-align:center}.band h2{font-size:2.2rem;margin:0 0 .3em;letter-spacing:-.02em}.band p{margin:0 0 26px;opacity:.92;font-size:1.12rem}
+.band .appstore{background:#3A2000;color:#fff}.band .appstore svg{fill:#fff}
+footer{background:#1d1610;color:#d8c9b8;padding:48px 0 40px;font-size:.92rem}footer .wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+footer a{color:#f0e3d0}.links{display:flex;gap:22px;flex-wrap:wrap}
+@media(max-width:840px){.hero .wrap{grid-template-columns:1fr;text-align:center;padding-top:54px}.lede{margin-inline:auto}.cta-row{justify-content:center}.eyebrow{margin-inline:auto}.phone-stage{order:-1}h1{font-size:2.5rem}.grid,.steps{grid-template-columns:1fr}}
 </style>
-</head>
-<body>
-<img class="icon" src="img/icon.png" alt="BarCount">
-<h1>BarCount</h1>
-<p class="mut">Offline bottle and keg counts with variance vs last close — for bar managers.</p>
-<p><a class="store" href="https://apps.apple.com/app/barcount-bar-inventory/id6800642221">Download on the App Store</a></p>
-<p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
-</body>
-</html>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BarCount: Bar Inventory","description":"Bar inventory count and variance for one manager: walk the shelf, close the count, see what walked away — offline.","url":"https://jmarrr.github.io/barcount/","image":"https://jmarrr.github.io/barcount/img/icon.png","applicationCategory":"BusinessApplication","operatingSystem":"iOS","offers":{"@type":"Offer","price":"39.99","priceCurrency":"USD","description":"BarCount Pro annual; monthly $7.99. Free tier included."}}</script>
+</head><body>
+<nav><div class="wrap"><a class="brand" href="#top"><img src="img/icon.png" alt="BarCount">BarCount</a>
+<a class="nav-cta" href="#download">App Store</a></div></nav>
+
+<header id="top" class="hero"><div class="wrap"><div>
+<span class="eyebrow">On-device · Works in the walk-in</span>
+<h1>Bar inventory counts<br><span class="grad">that show what walked away.</span></h1>
+<p class="lede">Bar inventory for one manager: walk the shelf in order, close the count, and see variance vs the last close — bottles and dollars — offline. Built for a single busy bar, not a $165/mo multi-user suite.</p>
+<div class="cta-row" id="download"><a class="appstore" href="https://apps.apple.com/app/barcount-bar-inventory/id6800642221"><span><small>Download on the</small><b>App Store</b></span><svg viewBox="0 0 384 512"><path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21s-45-20-74-20c-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 71 57 29-1 40-19 74-19s44 19 74 18c31 0 50-28 68-55 22-31 31-61 31-63-1-1-60-23-61-90z"/><path d="M262 84c16-19 27-46 24-73-23 1-51 16-67 35-15 17-28 44-25 70 26 2 52-13 68-32z"/></svg></a><span class="price-pill">Free to use — <b>1 area · 25 bottles</b></span></div>
+</div><div class="phone-stage"><div class="phone"><img src="img/home.png" alt="BarCount variance ticket: was/now change per bottle sorted by shrink, with restock list and share"></div></div></div></header>
+
+<div class="trust"><div class="wrap">
+<span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Count in shelf order</span>
+<span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Variance vs last close</span>
+<span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Below-PAR restock list</span>
+<span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Works offline</span>
+</div></div>
+
+<section><div class="wrap"><div class="sec-head"><h2>Built for the shelf, not the spreadsheet</h2><p>Close a real count on a Friday night — without seats, cloud sync, or a sales-team demo.</p></div>
+<div class="grid">
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h12M4 12h9M4 18h14"/></svg></div><h3>Shelf in walk order</h3><p>Bottles and kegs listed the way they sit — name, size, on-hand, PAR. Count top to bottom, no hunting.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Same-as-last speed</h3><p>Most bottles haven't moved. One tap confirms the last level and you're on to the next.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h7v14H4zM13 5h7v14h-7z"/></svg></div><h3>Variance ticket</h3><p>Was, now, and the difference per SKU — sorted by shrink, with dollars when pack costs are set.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 9h16"/></svg></div><h3>Below-PAR restock</h3><p>Every close ends in the order list: what's under PAR and by how much. Photograph it, text it, done.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/></svg></div><h3>History that sticks</h3><p>Closed counts stay on the phone, so next week's variance always has a baseline.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-4 7-8 8-4-1-8-3-8-8V7z"/></svg></div><h3>Private by design</h3><p>No account, no server, no analytics. Your counts and costs stay on your phone.</p></div>
+</div></div></section>
+
+<section style="background:var(--bg-alt)"><div class="wrap"><div class="sec-head"><h2>Three steps every close</h2></div>
+<div class="steps">
+<div class="step"><h3>Set the shelf</h3><p>Areas, bottles, sizes and PAR — once.</p></div>
+<div class="step"><h3>Walk the count</h3><p>Shelf order, tenths of a bottle, same-as-last taps.</p></div>
+<div class="step"><h3>Close &amp; compare</h3><p>Variance vs last close plus the restock list. Share the ticket.</p></div>
+</div></div></section>
+
+<section><div class="wrap pricing"><div class="pricecard"><span class="once">Free to start</span>
+<div class="amt">$7.99<span> /month</span></div>
+<p style="color:var(--muted);margin:.3em 0 0">or <b>$39.99/year</b> — about $3.33 a month, with a 7-day free trial</p>
+<ul class="plist">
+<li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Free: 1 area, 25 bottles — variance and restock included</li>
+<li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Pro: unlimited areas and bottles</li>
+<li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Clean owner PDF, unlimited history</li>
+<li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Offline — counts stay on your phone</li>
+</ul>
+<a class="appstore" href="https://apps.apple.com/app/barcount-bar-inventory/id6800642221"><span><small>Download on the</small><b>App Store</b></span><svg viewBox="0 0 384 512"><path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21s-45-20-74-20c-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 71 57 29-1 40-19 74-19s44 19 74 18c31 0 50-28 68-55 22-31 31-61 31-63-1-1-60-23-61-90z"/><path d="M262 84c16-19 27-46 24-73-23 1-51 16-67 35-15 17-28 44-25 70 26 2 52-13 68-32z"/></svg></a>
+<p style="color:var(--muted);font-size:.78rem;margin:18px 0 0;line-height:1.5">BarCount Pro is an auto-renewing subscription. Payment is charged to your Apple Account at confirmation of purchase and renews automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel in your Apple Account settings.</p>
+</div></div></section>
+
+<section style="background:var(--bg-alt)"><div class="wrap"><div class="sec-head"><h2>Questions</h2></div><div class="faq">
+<details open><summary>Is this Partender or Backbar?</summary><p>No. BarCount is a solo bar inventory count — shelf-order counting, variance, and a restock list, offline. No seats, no cloud dashboard, no ordering platform, and nothing like $165/mo.</p></details>
+<details><summary>Does it work offline?</summary><p>Yes. The walk-in, the basement cage, a festival bar — counting, closing and the variance ticket all run on the phone.</p></details>
+<details><summary>Do I have to enter costs?</summary><p>No. Counts and bottle variance work without them. Add pack costs when you want the ticket to show dollars walked, not just bottles.</p></details>
+<details><summary>What do I get for free?</summary><p>One area with 25 bottles — and the whole point works on it: same-as-last counting, variance vs last close, the restock list, and your last 8 closed counts. Pro removes the caps and adds the clean owner PDF.</p></details>
+</div></div></section>
+
+<section class="band"><div class="wrap"><h2>Close the count. See what walked away.</h2><p>Shelf-order counts, variance vs last close, and the restock list — offline, on your phone.</p>
+<a class="appstore" href="https://apps.apple.com/app/barcount-bar-inventory/id6800642221"><span><small>Download on the</small><b>App Store</b></span><svg viewBox="0 0 384 512"><path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21s-45-20-74-20c-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 71 57 29-1 40-19 74-19s44 19 74 18c31 0 50-28 68-55 22-31 31-61 31-63-1-1-60-23-61-90z"/><path d="M262 84c16-19 27-46 24-73-23 1-51 16-67 35-15 17-28 44-25 70 26 2 52-13 68-32z"/></svg></a></div></section>
+
+<footer><div class="wrap"><div>© 2026 BarCount</div><div class="links">
+<a href="privacy.html">Privacy</a>
+<a href="terms.html">Terms</a>
+<a href="mailto:overlapmarr@gmail.com">Contact</a>
+<a href="/">All apps</a>
+</div></div></footer>
+</body></html>
