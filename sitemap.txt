@@ -93,3 +93,6 @@ https://jmarrr.github.io/hair-formula/
 https://jmarrr.github.io/dueflow/
 https://jmarrr.github.io/tagten/
 https://jmarrr.github.io/nightcard/
+https://jmarrr.github.io/cuffbook/
+https://jmarrr.github.io/cuffbook/privacy.html
+https://jmarrr.github.io/cuffbook/terms.html
