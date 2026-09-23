@@ -96,3 +96,10 @@ https://jmarrr.github.io/nightcard/
 https://jmarrr.github.io/cuffbook/
 https://jmarrr.github.io/cuffbook/privacy.html
 https://jmarrr.github.io/cuffbook/terms.html
+https://jmarrr.github.io/noise-reducer/
+https://jmarrr.github.io/video-background/
+https://jmarrr.github.io/auto-reframe/
+https://jmarrr.github.io/workout-overlay/
+https://jmarrr.github.io/image-to-excel/
+https://jmarrr.github.io/screenshot-mockup/
+https://jmarrr.github.io/audio-to-midi/
