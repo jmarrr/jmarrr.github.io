@@ -153,3 +153,5 @@ https://jmarrr.github.io/silhouette-maker/
 https://jmarrr.github.io/stage-plot/
 https://jmarrr.github.io/video-split/
 https://jmarrr.github.io/wedding-timeline/
+https://jmarrr.github.io/image-to-svg/
+https://jmarrr.github.io/epub-converter/
