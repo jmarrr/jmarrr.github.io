@@ -155,3 +155,5 @@ https://jmarrr.github.io/video-split/
 https://jmarrr.github.io/wedding-timeline/
 https://jmarrr.github.io/image-to-svg/
 https://jmarrr.github.io/epub-converter/
+https://jmarrr.github.io/image-to-embroidery/
+https://jmarrr.github.io/bank-statement/
