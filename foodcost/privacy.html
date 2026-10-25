@@ -38,10 +38,13 @@ or service <em>you</em> choose. We are not involved in the transfer and receive 
 <p>FoodMargin does not use tracking SDKs or advertising identifiers. Local preferences
 use on-device storage only.</p>
 <h2>Anonymous usage counts</h2>
-<p>The app sends daily counters to a server we run ourselves, each time you leave the app (from version 1.0.4; earlier versions sent one batch a day): how often a
-screen was opened, whether the core job was done, whether the subscription screen was
-reached (and where), and (from version 1.0.5) what a purchase attempt ended in (completed, cancelled, pending,
-failed, or no product available) — grouped only by how long ago the app was installed. There are no identifiers of any
+<p>The app sends daily counters to a server we run ourselves, each time you leave the app (from version 1.0.4; earlier versions sent one batch a day): how often the
+app was opened, whether the core job was done, how the subscription screen was used (shown, and where; plan
+selected; closed; purchases restored), and (from version 1.0.5) what a purchase attempt ended in (completed,
+cancelled, pending, failed, or no product available), each count tagged with its day and with how long ago the app was installed (the same day, 1–3, 4–7, 8–14,
+15–30, or more than 30 days). Each post also carries the app’s name and version, your device language and your
+App Store country (the store your Apple Account uses, not your location); our server keeps those only as separate
+daily tallies (how many posts came from each version, language and country), not attached to the counts. There are no identifiers of any
 kind (no account, no advertising ID, no device ID), no job content, and no third-party
 analytics service. We use it only to see which parts of the app get in the way. It is on by default; from
 version 1.0.5 the app says so on its first screen (and once, on the first launch, if you used an earlier version).
